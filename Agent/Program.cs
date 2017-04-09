@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NeuralNetwork;
+using System.Drawing;
 
 namespace Agent
 {
@@ -11,13 +12,25 @@ namespace Agent
     {
         static void Main(string[] args)
         {
-            Network net = new Network(2, new int[] { 3, 3 }, 2);
+            Console.Title = "Neural Network Testing";
 
-            double[] result = net.elaborate(new double[] { 5, 0, 10 });
-            foreach (double r in result)
+            // Testing Neural Network givin it 3 input values for 100 times (testing with )
+            for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine(r);
+                NeuroNetwork net = new NeuroNetwork(3, new int[] { 100, 200, 200, 20 }, 1);
+                double[] result = net.elaborate(new double[] { 0, 0, 0 });
+                foreach (double r in result)
+                {
+                    if (r < .3) Console.ForegroundColor = ConsoleColor.Red;
+                    else if (r > .7) Console.ForegroundColor = ConsoleColor.Green;
+                    else Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(r);
+                }
+                System.Threading.Thread.Sleep(10);
             }
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("\nPress a key to exit...");
             Console.ReadLine();
         }
     }

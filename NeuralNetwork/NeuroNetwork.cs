@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 namespace NeuralNetwork
 {
     // Considering the output layer as the result of last layer of HLs
-    public class Network
+    public class NeuroNetwork
     {
         
         // Network params
         private int input_nodes, output_nodes, hidden_layers_count;
         private int[] neurons_per_layer;
+        Random random = new Random();
 
         // Network structure as array of perceptrons
         Perceptron[] perceptrons;
 
-        public Network(int input_nodes, int[] neurons_per_layer, int output_nodes)
+        public NeuroNetwork(int input_nodes, int[] neurons_per_layer, int output_nodes)
         {
             // Set parameters of network
             this.input_nodes = input_nodes;
@@ -35,12 +36,16 @@ namespace NeuralNetwork
             int p_index = 0;
             for (int i = 0; i < hidden_layers_count; i++)
             {
+                // Check if is last layer (output layer)
+                bool isOutputLayer = false;
+                if (i == hidden_layers_count - 1) isOutputLayer = true;
+
                 for (int p = 0; p < neurons_per_layer[i]; p++)
                 {
                     int input_nodes;
                     if (i == 0) input_nodes = this.input_nodes;
                     else input_nodes = neurons_per_layer[i - 1];
-                    perceptrons[p_index++] = new Perceptron(input_nodes);
+                    perceptrons[p_index++] = new Perceptron(input_nodes, random, isOutputLayer);
                 }
             }
         }

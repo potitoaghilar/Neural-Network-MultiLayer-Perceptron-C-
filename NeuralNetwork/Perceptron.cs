@@ -11,32 +11,23 @@ namespace NeuralNetwork
 
         protected double[] weights;
         protected double bias;
-        private Random random = new Random();
         
-        protected double output;
+        private double output;
 
-        public Perceptron(int input_nodes)
+        public Perceptron(int input_nodes, Random random, bool isOutputLayer = false)
         {
             // Initialize perceptron with weights and bias to random
-            double[] inputs = new double[input_nodes];
+            double[] weights = new double[input_nodes];
 
             // Randomize input weights
             for (int i = 0; i < input_nodes; i++)
             {
-                inputs[i] = random.NextDouble();
+                weights[i] = random.NextDouble() * .2 - .1;
             }
 
-            init(inputs, random.NextDouble());
-        }
-        public Perceptron(double[] weights, double bias)
-        {
-            // Initialize perceptron with setted weights and bias
-            init(weights, bias);
-        }
-        private void init(double[] weights, double bias)
-        {
             this.weights = weights;
-            this.bias = bias;
+            if (isOutputLayer) bias = 0;
+            else bias = random.NextDouble();
         }
 
         // Set/Get weights
@@ -67,8 +58,6 @@ namespace NeuralNetwork
 
         public double getOutput()
         {
-            double output = this.output;
-            this.output = 0;
             return output;
         }
 
@@ -95,6 +84,10 @@ namespace NeuralNetwork
         {
             if (x >= 0) return 1;
             else return 0;
+        }
+        private double tanh(double x)
+        {
+            return Math.Tanh(x);
         }
     }
 }
