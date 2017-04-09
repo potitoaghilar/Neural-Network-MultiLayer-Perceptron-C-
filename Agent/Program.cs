@@ -14,11 +14,11 @@ namespace Agent
         {
             Console.Title = "Neural Network Testing";
 
-            // Testing Neural Network givin it 3 input values for 100 times (testing with )
+            // Testing Neural Network giving it 3 input values for 100 times (testing with 520 neurons)
             for (int i = 0; i < 100; i++)
             {
                 NeuroNetwork net = new NeuroNetwork(3, new int[] { 100, 200, 200, 20 }, 1);
-                double[] result = net.elaborate(new double[] { 0, 0, 0 });
+                double[] result = net.elaborate(new double[] { 0, .5, 0 });
                 foreach (double r in result)
                 {
                     if (r < .3) Console.ForegroundColor = ConsoleColor.Red;
