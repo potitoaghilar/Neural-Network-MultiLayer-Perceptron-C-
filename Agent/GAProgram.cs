@@ -13,14 +13,15 @@ namespace Agent
         {
             Console.Title = "Genetic Algorithm + Neural Network ~ Testing";
 
-            // Testing Genetic Algorithm combined with Neural Network
-            GeneticController GController = new GeneticController(2, 12, 3, new int[] { 50, 50, 20 }, 1);
-            GController.createGeneration();
+            // Testing Genetic Algorithm combined with Neural Network of 200 neurons
+            GeneticController GController = new GeneticController(12, 3, new int[] { 80, 120 }, 1);
 
-            // Learning process
-            printResultsAndSetFitness(GController);
-            GController.createGeneration();
-            printResultsAndSetFitness(GController);
+            // Learning process for 100 generations
+            for (int i = 0; i < 100; i++)
+            {
+                GController.createGeneration();
+                printResultsAndSetFitness(GController);
+            }
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("\nPress a key to exit...");
@@ -29,7 +30,8 @@ namespace Agent
 
         static void printResultsAndSetFitness(GeneticController g_ctrl)
         {
-            double[][] result = g_ctrl.executeGeneration(new double[] { 0, 1, 0 });
+            Console.Clear();
+            double[][] result = g_ctrl.executeGeneration(new double[] { .1, .5, .7 });
             double[] fitness = new double[result.Length];
             int index = 0;
             foreach (double[] r in result)
@@ -40,7 +42,7 @@ namespace Agent
                 Console.WriteLine(r[0]);
 
                 if (r[0] > .4 && r[0] < .6)
-                    fitness[index] = 10 * Math.Abs(.5 - r[0]); // Funzione di fitness
+                    fitness[index] = 1 - (10 * Math.Abs(.5 - r[0])); // Funzione di fitness
                 else fitness[index] = 0;
 
                 index++;

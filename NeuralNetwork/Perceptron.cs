@@ -29,6 +29,14 @@ namespace NeuralNetwork
             if (isOutputLayer) bias = 0;
             else bias = random.NextDouble() * .2 - .1;
         }
+        public Perceptron(double[] weights, double bias)
+        {
+            this.weights = new double[weights.Length];
+            for (int i = 0; i < weights.Length; i++)
+                this.weights[i] = weights[i];
+
+            this.bias = bias;
+        }
 
         // Set/Get weights
         public void setWeights(double[] weights)
@@ -88,6 +96,23 @@ namespace NeuralNetwork
         private double tanh(double x)
         {
             return Math.Tanh(x);
+        }
+
+        // Apply mutations
+        public void mutate(Random random)
+        {
+            double random_limit = .05, r;
+            // Mutate weights
+            for (int i = 0; i < weights.Length; i++)
+            {
+                r = random.NextDouble();
+                if (r < random_limit)
+                    weights[i] = r * .2 - .1;
+            }
+            // Mutate bias
+            r = random.NextDouble();
+            if (r < random_limit)
+                bias = r * .2 - .1;
         }
     }
 }

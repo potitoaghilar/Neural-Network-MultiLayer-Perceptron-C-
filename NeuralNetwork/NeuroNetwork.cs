@@ -18,7 +18,7 @@ namespace NeuralNetwork
         // Network structure as array of perceptrons
         private Perceptron[] perceptrons;
 
-        public NeuroNetwork(int input_nodes, int[] neurons_per_layer, int output_nodes, Random random)
+        public NeuroNetwork(int input_nodes, int[] neurons_per_layer, int output_nodes, Random random, Perceptron[] perceptrons = null)
         {
             // Set parameters of network
             this.input_nodes = input_nodes;
@@ -28,26 +28,33 @@ namespace NeuralNetwork
             this.random = random;
 
             // Create network structure
-            createNetwork();
+            createNetwork(perceptrons);
         }
 
-        private void createNetwork()
+        private void createNetwork(Perceptron[] ps)
         {
-            perceptrons = new Perceptron[neurons_per_layer.Sum()];
-            int p_index = 0;
-            for (int i = 0; i < hidden_layers_count; i++)
+            if (perceptrons == null)
             {
-                // Check if is last layer (output layer)
-                bool isOutputLayer = false;
-                if (i == hidden_layers_count - 1) isOutputLayer = true;
-
-                for (int p = 0; p < neurons_per_layer[i]; p++)
+                perceptrons = new Perceptron[neurons_per_layer.Sum()];
+                int p_index = 0;
+                for (int i = 0; i < hidden_layers_count; i++)
                 {
-                    int input_nodes;
-                    if (i == 0) input_nodes = this.input_nodes;
-                    else input_nodes = neurons_per_layer[i - 1];
-                    perceptrons[p_index++] = new Perceptron(input_nodes, random, isOutputLayer);
+                    // Check if is last layer (output layer)
+                    bool isOutputLayer = false;
+                    if (i == hidden_layers_count - 1) isOutputLayer = true;
+
+                    for (int p = 0; p < neurons_per_layer[i]; p++)
+                    {
+                        int input_nodes;
+                        if (i == 0) input_nodes = this.input_nodes;
+                        else input_nodes = neurons_per_layer[i - 1];
+                        perceptrons[p_index++] = new Perceptron(input_nodes, random, isOutputLayer);
+                    }
                 }
+            }
+            else
+            {
+                perceptrons = ps;
             }
         }
 
@@ -94,6 +101,11 @@ namespace NeuralNetwork
         }
 
         // Set weights and biases of network
+        public void setPerceptrons(Perceptron[] perceptrons)
+        {
+            for (int i = 0; i < perceptrons.Length; i++)
+                this.perceptrons[i] = perceptrons[i];
+        }
         public void setPerceptrons(Perceptron[] perceptrons1, Perceptron[] perceptrons2)
         {
             for (int i = 0; i < perceptrons1.Length; i++)
@@ -101,6 +113,12 @@ namespace NeuralNetwork
 
             for (int i = perceptrons1.Length; i < perceptrons2.Length; i++)
                 perceptrons[i] = perceptrons2[i];
+        }
+
+        // Get weights and biases of network
+        public Perceptron[] getPerceptrons()
+        {
+            return perceptrons;
         }
 
         // Split genome to cross-over in genetic controller
@@ -113,6 +131,15 @@ namespace NeuralNetwork
             for (int i = p1_count; i < p2_count; i++)
                 p2[i] = perceptrons[i];
             return new object[] { p1, p2 };
+        }
+
+        // Apply mutations to perceptrons - changing weights and biases
+        public void applyMutations(Random random)
+        {
+            for (int i = 0; i < perceptrons.Length; i++)
+            {
+                perceptrons[i].mutate(random);
+            }
         }
 
     }
