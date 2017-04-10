@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using NeuralNetwork;
 
 namespace GeneticAlgorithm
@@ -61,7 +60,7 @@ namespace GeneticAlgorithm
                 genomes_dictionary.Add(genomes[i], fitness[i]);
             genomes_dictionary = genomes_dictionary.OrderByDescending(key => key.Value).Take(solution_selection_for_crossover).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            // Crente new genomes array
+            // Create new genomes array
             NeuroNetwork[] newGenomes = new NeuroNetwork[genomes_count];
 
             // Keep original 2 better solutions
