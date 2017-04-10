@@ -31,7 +31,7 @@ namespace Agent
         static void printResultsAndSetFitness(GeneticController g_ctrl)
         {
             Console.Clear();
-            double[][] result = g_ctrl.executeGeneration(new double[] { .1, .5, .7 });
+            double[][] result = g_ctrl.executeGeneration(new double[] { 0, 1, -.5 });
             double[] fitness = new double[result.Length];
             int index = 0;
             foreach (double[] r in result)
