@@ -8,16 +8,17 @@ using System.Drawing;
 
 namespace Agent
 {
-    class Program
+    class NNProgram
     {
         static void Main(string[] args)
         {
             Console.Title = "Neural Network Testing";
 
             // Testing Neural Network giving it 3 input values for 100 times (testing with 520 neurons)
+            Random random = new Random();
             for (int i = 0; i < 100; i++)
             {
-                NeuroNetwork net = new NeuroNetwork(3, new int[] { 100, 200, 200, 20 }, 1);
+                NeuroNetwork net = new NeuroNetwork(3, new int[] { 100, 200, 200, 20 }, 1, random);
                 double[] result = net.elaborate(new double[] { 0, .5, 0 });
                 foreach (double r in result)
                 {

@@ -13,18 +13,19 @@ namespace NeuralNetwork
         // Network params
         private int input_nodes, output_nodes, hidden_layers_count;
         private int[] neurons_per_layer;
-        Random random = new Random();
+        Random random;
 
         // Network structure as array of perceptrons
         Perceptron[] perceptrons;
 
-        public NeuroNetwork(int input_nodes, int[] neurons_per_layer, int output_nodes)
+        public NeuroNetwork(int input_nodes, int[] neurons_per_layer, int output_nodes, Random random)
         {
             // Set parameters of network
             this.input_nodes = input_nodes;
             this.output_nodes = output_nodes;
             this.hidden_layers_count = neurons_per_layer.Length + 1; // Adds 1 becouse of output layer
             this.neurons_per_layer = neurons_per_layer.Concat(new int[] { output_nodes }).ToArray(); // Concat the out layer to hidden layer
+            this.random = random;
 
             // Create network structure
             createNetwork();
