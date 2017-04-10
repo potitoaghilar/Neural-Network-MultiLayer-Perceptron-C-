@@ -16,7 +16,7 @@ namespace NeuralNetwork
         Random random;
 
         // Network structure as array of perceptrons
-        Perceptron[] perceptrons;
+        private Perceptron[] perceptrons;
 
         public NeuroNetwork(int input_nodes, int[] neurons_per_layer, int output_nodes, Random random)
         {
@@ -93,6 +93,27 @@ namespace NeuralNetwork
             return outputs;
         }
 
+        // Set weights and biases of network
+        public void setPerceptrons(Perceptron[] perceptrons1, Perceptron[] perceptrons2)
+        {
+            for (int i = 0; i < perceptrons1.Length; i++)
+                perceptrons[i] = perceptrons1[i];
+
+            for (int i = perceptrons1.Length; i < perceptrons2.Length; i++)
+                perceptrons[i] = perceptrons2[i];
+        }
+
+        // Split genome to cross-over in genetic controller
+        public object[] crossOverSplit()
+        {
+            int p1_count = (int)Math.Ceiling(perceptrons.Length / 2.0), p2_count = perceptrons.Length - p1_count;
+            Perceptron[] p1 = new Perceptron[p1_count], p2 = new Perceptron[p2_count];
+            for (int i = 0; i < p1_count; i++)
+                p1[i] = perceptrons[i];
+            for (int i = p1_count; i < p2_count; i++)
+                p2[i] = perceptrons[i];
+            return new object[] { p1, p2 };
+        }
 
     }
 }

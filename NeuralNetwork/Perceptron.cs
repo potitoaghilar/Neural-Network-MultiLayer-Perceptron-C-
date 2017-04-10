@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralNetwork
 {
-    class Perceptron
+    public class Perceptron
     {
 
         protected double[] weights;
@@ -27,7 +27,7 @@ namespace NeuralNetwork
 
             this.weights = weights;
             if (isOutputLayer) bias = 0;
-            else bias = random.NextDouble();
+            else bias = random.NextDouble() * .2 - .1;
         }
 
         // Set/Get weights
